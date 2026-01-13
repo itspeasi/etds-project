@@ -1,0 +1,32 @@
+<div class="page-container">
+  @if (loading) {
+    <div class="loading-state">
+      <p>Loading venue details...</p>
+    </div>
+  } @else if (venue) {
+    <div class="venue-header">
+      <a routerLink="/venues" class="back-link">&larr; Back to Venues</a>
+      <div class="header-content">
+        <h1>{{ venue.name }}</h1>
+        <div class="meta-info">
+          <span class="location">{{ venue.address }}, {{ venue.city }}, {{ venue.state }} {{ venue.zip }}</span>
+          <span class="capacity">Capacity: {{ venue.capacity | number }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calendar-section card">
+      <div class="card-header">
+        <h3>Upcoming Events</h3>
+      </div>
+      <div class="card-body">
+        <app-calendar [events]="events" mode="public"></app-calendar>
+      </div>
+    </div>
+  } @else {
+    <div class="error-state">
+      <p>Venue not found.</p>
+      <a routerLink="/venues">Return to Venue List</a>
+    </div>
+  }
+</div>

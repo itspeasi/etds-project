@@ -1,0 +1,234 @@
+.viewer-container {
+  max-width: 95%;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--surface-color);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-color);
+}
+
+.viewer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  color: var(--link-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+
+  &:hover {
+    text-decoration: underline;
+    color: var(--link-hover-color);
+  }
+}
+
+.collection-title {
+  font-weight: 300;
+  font-size: 2rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-transform: capitalize;
+  color: var(--primary-text-color);
+  span {
+    font-weight: 500;
+    color: var(--accent-color);
+  }
+}
+
+.meta-text {
+  color: var(--secondary-text-color);
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
+  transition: background-color 0.2s ease;
+  
+  background-color: var(--success-color);
+  &:hover {
+    background-color: #15803d;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: var(--border-color);
+  }
+}
+
+.btn-secondary {
+  background-color: var(--surface-color);
+  color: var(--primary-text-color);
+  border: 1px solid var(--border-color);
+
+  &:hover:not(:disabled) {
+    background-color: var(--border-color);
+  }
+}
+
+.btn-delete {
+  background-color: var(--danger-color);
+  &:hover {
+    background-color: #b91c1c;
+  }
+}
+
+/* Table Styles */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px; /* Ensures table doesn't squish too much */
+
+  th, td {
+    padding: 1rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  th {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--primary-text-color);
+    font-weight: 600;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  td {
+    color: var(--secondary-text-color);
+    font-size: 0.95rem;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+  
+  tr:hover td {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+}
+
+/* Regular text content styling */
+.text-cell {
+  max-width: 350px; /* Limits width so long bios don't expand the table forever */
+  max-height: 200px; /* Limits height so rows don't become huge */
+  overflow-y: auto;  /* Adds scrollbar for overflowing text */
+  word-break: break-word; /* Ensures long words/URLs break */
+  white-space: pre-wrap; /* Preserves formatting/newlines */
+
+  /* Scrollbar styling for text cells */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+  }
+}
+
+/* JSON Prettier Styles */
+pre {
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  color: #d1d5db;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.8rem;
+  max-height: 200px;
+  max-width: 350px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  
+  /* Scrollbar styling for pre blocks */
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+  }
+}
+
+.empty-state, .loading-state {
+  text-align: center;
+  color: var(--secondary-text-color);
+  padding: 3rem;
+  font-style: italic;
+}
+
+/* Pagination Styles */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+
+  .page-input-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--primary-text-color);
+    font-weight: 500;
+  }
+
+  .page-input {
+    width: 60px;
+    padding: 0.4rem;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--background-color);
+    color: var(--primary-text-color);
+    font-size: 1rem;
+    
+    &:focus {
+      border-color: var(--accent-color);
+      outline: none;
+    }
+
+    /* Hide spinners in number input */
+    &::-webkit-inner-spin-button, 
+    &::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+    -moz-appearance: textfield;
+  }
+}

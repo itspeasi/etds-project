@@ -1,0 +1,266 @@
+.events-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header / Hero Section */
+.page-header {
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  
+  .header-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    color: var(--primary-text-color);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+    color: var(--secondary-text-color);
+    margin: 0 0 2.5rem 0;
+    line-height: 1.6;
+  }
+}
+
+/* Search Bar Styling */
+.search-bar {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+  gap: 0.5rem;
+
+  input {
+    flex: 1;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--primary-text-color);
+    font-size: 1rem;
+    transition: all 0.2s;
+
+    &:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      outline: none;
+    }
+  }
+
+  .btn-search {
+    padding: 0 1.5rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: var(--accent-hover-color);
+    }
+  }
+}
+
+/* Events Grid Container */
+.events-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+/* Event Card Styles */
+.event-card {
+  background: var(--surface-color);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border: 1px solid var(--border-color);
+  height: 100%;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+    border-color: var(--accent-color);
+  }
+}
+
+.card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: rgba(255, 255, 255, 0.02);
+
+  .artist-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+    margin-bottom: 0.25rem;
+  }
+
+  .performance-name {
+    font-size: 1rem;
+    color: var(--accent-color);
+    font-weight: 500;
+  }
+}
+
+.card-body {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Ensures vertical alignment */
+  font-size: 0.95rem;
+  gap: 1rem; /* Prevents text from touching */
+  
+  .label {
+    color: var(--secondary-text-color);
+    font-weight: 500;
+    flex-shrink: 0; /* Prevents label from squishing */
+  }
+  
+  .value {
+    color: var(--primary-text-color);
+    text-align: right;
+    font-weight: 400;
+    white-space: nowrap; /* Prevents wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Handles extreme overflow gracefully */
+  }
+}
+
+/* Availability Badges */
+.availability-badge {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem;
+  border-radius: 6px;
+  
+  &.available {
+    color: var(--success-color);
+    background-color: rgba(22, 163, 74, 0.1);
+  }
+  
+  &.low-stock {
+    color: var(--warning-color);
+    background-color: rgba(245, 158, 11, 0.1);
+  }
+  
+  &.sold-out {
+    color: var(--danger-color);
+    background-color: rgba(220, 38, 38, 0.1);
+  }
+}
+
+/* Card Footer */
+.card-footer {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  background-color: rgba(255, 255, 255, 0.02);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-display {
+  display: flex;
+  flex-direction: column;
+  
+  .price-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--secondary-text-color);
+    letter-spacing: 0.05em;
+  }
+  
+  .price-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+  }
+}
+
+/* Buttons */
+.btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-buy-tickets {
+  background-color: var(--accent-color);
+  color: white;
+  
+  &:hover {
+    background-color: var(--accent-hover-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-sold-out {
+  background-color: var(--surface-color);
+  color: var(--secondary-text-color);
+  border: 1px solid var(--border-color);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--surface-color);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  
+  p {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    color: var(--primary-text-color);
+  }
+  
+  .small {
+    font-size: 1rem;
+    color: var(--secondary-text-color);
+  }
+}

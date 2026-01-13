@@ -1,0 +1,45 @@
+<div class="page-container">
+  <div class="header-section">
+    <h2>User Preferences</h2>
+    <p class="subtitle">Manage your account settings and profile details.</p>
+  </div>
+
+  @if (user(); as u) {
+    <div class="content-stack">
+      <!-- Account Info Card -->
+      <div class="card account-card">
+        <div class="card-header">
+          <h3>Account Information</h3>
+        </div>
+        <div class="card-body">
+          <div class="info-grid">
+            <div class="info-item">
+              <span class="label">Username</span>
+              <span class="value">{{ u.username }}</span>
+            </div>
+            <div class="info-item">
+              <span class="label">Account Type</span>
+              <span class="type-badge">{{ u.userType | titlecase }}</span>
+            </div>
+          </div>
+          
+          <div class="actions">
+            <button (click)="goToResetPassword()" class="btn btn-secondary">Reset Password</button>
+            <button (click)="deleteAccount()" class="btn btn-delete">Delete Account</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Artist Profile Section (Only for Artists) -->
+      @if (u.userType === 'artist') {
+        <div class="artist-section">
+          <app-profile-management />
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="empty-state">
+      <p>Please log in to view your preferences.</p>
+    </div>
+  }
+</div>

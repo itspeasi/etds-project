@@ -1,0 +1,39 @@
+<div class="artists-page">
+  <!-- Header / Hero Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Discover Artists</h1>
+      <p class="subtitle">Find your favorite performers and explore new talent.</p>
+      
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <input 
+          type="text" 
+          placeholder="Search by artist name..." 
+          [(ngModel)]="searchTerm" 
+          (input)="filterArtists()">
+        <button class="btn-search">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="artist-list-container">
+    <div class="artist-grid">
+      @for (profile of filteredProfiles; track profile._id) {
+        <a [routerLink]="['/artists', profile._id]" class="artist-card">
+          <div class="card-image">
+            <img [src]="profile.imageUrl || 'https://via.placeholder.com/300'" alt="{{ profile.artistName }}">
+          </div>
+          <div class="card-content">
+            <h3>{{ profile.artistName }}</h3>
+            <p class="artist-bio">{{ profile.bio | slice:0:100 }}{{ profile.bio.length > 100 ? '...' : '' }}</p>
+          </div>
+        </a>
+      } @empty {
+        <div class="empty-state">
+          <p>No artists found matching "{{ searchTerm }}".</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

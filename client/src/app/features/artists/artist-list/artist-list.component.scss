@@ -1,0 +1,157 @@
+.artists-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header / Hero Section */
+.page-header {
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  
+  .header-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    color: var(--primary-text-color);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+    color: var(--secondary-text-color);
+    margin: 0 0 2.5rem 0;
+    line-height: 1.6;
+  }
+}
+
+/* Search Bar Styling */
+.search-bar {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+  gap: 0.5rem;
+
+  input {
+    flex: 1;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--primary-text-color);
+    font-size: 1rem;
+    transition: all 0.2s;
+
+    &:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      outline: none;
+    }
+  }
+
+  .btn-search {
+    padding: 0 1.5rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: var(--accent-hover-color);
+    }
+  }
+}
+
+.artist-list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.artist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.artist-card {
+  background: var(--surface-color);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border-color 0.2s ease;
+  border: 1px solid var(--border-color);
+  height: 100%;
+  text-decoration: none;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+    border-color: var(--accent-color);
+  }
+
+  .card-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &:hover .card-image img {
+    transform: scale(1.05);
+  }
+
+  .card-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+      color: var(--primary-text-color);
+      font-weight: 600;
+    }
+
+    .artist-bio {
+      color: var(--secondary-text-color);
+      line-height: 1.6;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+  }
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--surface-color);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  color: var(--secondary-text-color);
+  font-size: 1.1rem;
+}

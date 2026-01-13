@@ -1,0 +1,46 @@
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 80px); // Adjust based on header height
+  overflow: hidden;
+  background-color: #1f2937; // Fallback color matching the theme
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block; // Removes potential whitespace below inline images
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(17, 24, 39, 0.8) 0%, rgba(17, 24, 39, 0.4) 50%, rgba(17, 24, 39, 0.8) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-text {
+  color: var(--primary-text-color);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  padding: 0 1rem; // Prevent text from touching edges on small screens
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--secondary-text-color);
+  }
+}

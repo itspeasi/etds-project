@@ -1,0 +1,42 @@
+<header class="header">
+  <div class="header-container">
+    <a routerLink="/" class="logo">ETDS</a>
+    <nav>
+      <ul>
+        <li><a routerLink="/artists" routerLinkActive="active">Artists</a></li>
+        <li><a routerLink="/events" routerLinkActive="active">Events</a></li>
+        <li><a routerLink="/venues" routerLinkActive="active">Venues</a></li>
+        <li><a routerLink="/top-artists" routerLinkActive="active" class="highlight-link">Top Artists</a></li>
+      </ul>
+    </nav>
+    <div class="user-menu-container">
+      @if (authService.currentUser(); as user) {
+        <div class="user-dropdown">
+          <button class="username-btn">{{ user.username }}</button>
+          <div class="dropdown-content">
+            <a routerLink="/preferences">My Profile</a>
+            @if (user.userType === 'customer') {
+              <a routerLink="/my-tickets">My Tickets</a>
+            }
+            @if (user.userType === 'distributor') {
+              <a routerLink="/distributor-dashboard">Sales Summary</a>
+              <a routerLink="/manage-venues">Manage Venues</a>
+              <a routerLink="/manage-events">Manage Events</a>
+            }
+            @if (user.userType === 'artist') {
+              <a routerLink="/artist-dashboard">Sales Summary</a>
+              <a routerLink="/manage-performances">My Performances</a>
+              <a routerLink="/my-events">My Events</a>
+            }
+            @if (user.userType === 'admin') {
+              <a routerLink="/admin">Admin Dashboard</a>
+            }
+            <a (click)="logout()">Logout</a>
+          </div>
+        </div>
+      } @else {
+        <a routerLink="/auth/login" class="login-button">Login</a>
+      }
+    </div>
+  </div>
+</header>

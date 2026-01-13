@@ -1,0 +1,112 @@
+<div class="detail-container">
+  @if (loading) {
+    <div class="loading-state">
+      <p>Loading artist details...</p>
+    </div>
+  } @else if (artistProfile) {
+    <!-- Profile Header -->
+    <div class="card profile-card">
+      <div class="profile-image-wrapper">
+        <img [src]="artistProfile.imageUrl || 'https://via.placeholder.com/400'" alt="{{ artistProfile.artistName }}">
+      </div>
+      <div class="profile-content">
+        <h1 class="artist-name">{{ artistProfile.artistName }}</h1>
+        <p class="artist-bio">{{ artistProfile.bio }}</p>
+      </div>
+    </div>
+
+    <div class="content-stack">
+      <!-- 1. Tours & Sets List -->
+      <div class="performances-section">
+        <div class="card">
+          <div class="card-header">
+            <h2>Tours & Sets</h2>
+          </div>
+          <div class="card-body p-0">
+            @if (performances.length > 0) {
+              <div class="performance-list">
+                @for (perf of performances; track perf._id) {
+                  <div class="performance-item">
+                    <div class="performance-summary">
+                      <div class="perf-title-row">
+                        <h3>{{ perf.performanceName }}</h3>
+                        <span class="status-badge" [ngClass]="getPerformanceStatus(perf).toLowerCase()">
+                          {{ getPerformanceStatus(perf) }}
+                        </span>
+                      </div>
+                      <p class="date-range">
+                        {{ perf.startDate | date:'mediumDate':'UTC' }} - {{ perf.endDate | date:'mediumDate':'UTC' }}
+                      </p>
+                    </div>
+                    
+                    @if (perf.events && perf.events.length > 0) {
+                      <div class="events-table-wrapper">
+                        <table class="events-table">
+                          <thead>
+                            <tr>
+                              <th>Venue</th>
+                              <th>Date</th>
+                              <th class="text-right">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @for (event of perf.events; track event._id) {
+                              <tr class="event-row" (click)="jumpToCalendar(event)">
+                                <td>
+                                  <div class="venue-name">{{ event.venue.name }}</div>
+                                  <div class="venue-city">{{ event.venue.city }}, {{ event.venue.state }}</div>
+                                </td>
+                                <td>
+                                  <div class="event-date">{{ event.startDateTime | date:'mediumDate' }}</div>
+                                  <div class="event-time">{{ event.startDateTime | date:'shortTime' }}</div>
+                                </td>
+                                <td class="text-right">
+                                  @if (event.status === 'canceled') {
+                                    <span class="status-badge canceled">Canceled</span>
+                                  } @else if (isSoldOut(event)) {
+                                    <span class="status-badge sold-out">Sold Out</span>
+                                  } @else if (isEventInFuture(event)) {
+                                    <button class="btn-link-action">View in Calendar &rarr;</button>
+                                  } @else {
+                                    <span class="status-badge past">Past</span>
+                                  }
+                                </td>
+                              </tr>
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+                    } @else {
+                      <p class="empty-text">No approved events for this tour yet.</p>
+                    }
+                  </div>
+                }
+              </div>
+            } @else {
+              <div class="empty-state">
+                <p>This artist has no scheduled performances at the moment.</p>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Full Width Calendar -->
+      <div class="calendar-section" id="event-calendar">
+        <div class="card">
+          <div class="card-header">
+            <h2>Event Calendar</h2>
+          </div>
+          <div class="card-body">
+            <!-- Calendar now takes full width of the card -->
+            <app-calendar [events]="allEvents" mode="public"></app-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="error-state">
+      <p>Artist profile not found.</p>
+    </div>
+  }
+</div>

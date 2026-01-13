@@ -1,0 +1,158 @@
+<div class="page-container">
+  <div class="header-section">
+    <h2>Event Management</h2>
+    <p class="subtitle">Schedule new events and manage existing bookings.</p>
+  </div>
+
+  <div class="content-wrapper">
+    <!-- Form Section -->
+    <div class="card form-card">
+      <div class="card-header">
+        <h3>{{ editingEvent ? 'Edit Event' : 'Schedule New Event' }}</h3>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="onSubmit()">
+          <div class="form-grid">
+            <!-- Row 1: Key Selections -->
+            <div class="form-group">
+              <label for="performance">Performance</label>
+              <div class="select-wrapper">
+                <select id="performance" name="performance" [(ngModel)]="newEvent.performance" required>
+                  <option value="" disabled>Select a performance</option>
+                  @for (p of performances; track p._id) {
+                    <option [value]="p._id">{{ p.artistProfile.artistName }} - {{ p.performanceName }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="venue">Venue</label>
+              <div class="select-wrapper">
+                <select id="venue" name="venue" [(ngModel)]="newEvent.venue" required>
+                  <option value="" disabled>Select a venue</option>
+                  @for (v of venues; track v._id) {
+                    <option [value]="v._id">{{ v.name }} ({{ v.city }}, {{ v.state }})</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <!-- Row 2: Date & Start Time -->
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input type="date" id="date" name="date" [(ngModel)]="newEvent.date" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="startTime">Start Time</label>
+              <input type="time" id="startTime" name="startTime" [(ngModel)]="newEvent.startTime" required>
+            </div>
+
+            <!-- Row 3: Duration & End Time -->
+            <div class="form-group duration-group">
+              <label>Duration</label>
+              <div class="duration-inputs">
+                <div class="input-with-suffix">
+                  <input type="number" id="durationHours" name="durationHours" [(ngModel)]="durationHours" min="0" required>
+                  <span>hrs</span>
+                </div>
+                <div class="input-with-suffix">
+                  <input type="number" id="durationMinutes" name="durationMinutes" [(ngModel)]="durationMinutes" min="0" max="59" required>
+                  <span>mins</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="endTime">Expected End Time</label>
+              <input type="time" id="endTime" [value]="calculatedEndTime" disabled readonly class="input-disabled">
+            </div>
+
+            <!-- Row 4: Ticket Price & Spacer -->
+            <div class="form-group">
+              <label for="ticketPrice">Ticket Price</label>
+              <div class="input-with-prefix">
+                <span>$</span>
+                <input type="number" id="ticketPrice" name="ticketPrice" [(ngModel)]="newEvent.ticketPrice" min="0" step="0.01" placeholder="0.00" required>
+              </div>
+            </div>
+            
+            <!-- Empty Spacer Div for Right Column layout balance -->
+            <div class="form-group spacer"></div>
+          </div>
+
+          <div class="form-actions">
+            @if (editingEvent) {
+              <button type="button" (click)="cancelEdit()" class="btn btn-ghost">Cancel</button>
+            }
+            <button type="submit" class="btn btn-primary">{{ editingEvent ? 'Update Event' : 'Create Event' }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- List Section -->
+    <div class="card list-card">
+      <div class="card-header">
+        <h3>Scheduled Events</h3>
+      </div>
+      <div class="card-body table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Performance Info</th>
+              <th>Venue</th>
+              <th>Schedule</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (event of events; track event._id) {
+              <tr>
+                <td>
+                  <div class="font-medium">{{ event.performance.performanceName }}</div>
+                  <div class="text-secondary small">{{ event.performance.artistProfile.artistName }}</div>
+                </td>
+                <td>
+                  <div class="font-medium">{{ event.venue.name }}</div>
+                  <div class="text-secondary small">{{ event.venue.city }}, {{ event.venue.state }}</div>
+                </td>
+                <td>
+                  <div>{{ event.startDateTime | date:'mediumDate' }}</div>
+                  <div class="text-secondary small">
+                    {{ event.startDateTime | date:'shortTime' }} - {{ event.endDateTime | date:'shortTime' }}
+                  </div>
+                </td>
+                <td class="font-medium">{{ event.ticketPrice | currency }}</td>
+                <td>
+                  <span class="status-badge" [ngClass]="event.status">
+                    {{ event.status }}
+                  </span>
+                </td>
+                <td class="text-right action-buttons">
+                  <button (click)="onEdit(event)" class="btn btn-sm btn-edit">Edit</button>
+                  @if (event.status === 'pending') {
+                    <button (click)="onDelete(event._id!)" class="btn btn-sm btn-delete">Delete</button>
+                  }
+                  @if (event.status === 'approved') {
+                    <button (click)="onCancel(event._id!)" class="btn btn-sm btn-cancel-event">Cancel</button>
+                  }
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="6" class="empty-state">
+                  <p>No events scheduled yet.</p>
+                  <p class="small">Use the form above to schedule your first event.</p>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

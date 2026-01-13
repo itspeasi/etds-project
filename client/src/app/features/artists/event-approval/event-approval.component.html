@@ -1,0 +1,123 @@
+<div class="page-container">
+  <div class="header-section">
+    <h2>Event Management</h2>
+    <p class="subtitle">Review requests from distributors and manage your approved schedule.</p>
+  </div>
+
+  <!-- Calendar View -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3>Your Schedule</h3>
+    </div>
+    <div class="card-body">
+      <app-calendar [events]="allEvents" mode="artist"></app-calendar>
+    </div>
+  </div>
+
+  <!-- Pending Events Section -->
+  <div class="card mb-4">
+    <div class="card-header border-warning">
+      <h3>
+        <span class="indicator pending"></span>
+        Pending Requests
+      </h3>
+      <span class="badge">{{ pendingEvents.length }}</span>
+    </div>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Performance</th>
+            <th>Venue Details</th>
+            <th>Distributor</th>
+            <th>Proposed Schedule</th>
+            <th class="text-right">Decision</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (event of pendingEvents; track event._id) {
+            <tr>
+              <td class="font-medium">{{ event.performance.performanceName }}</td>
+              <td>
+                <div class="venue-name">{{ event.venue.name }}</div>
+                <div class="venue-loc">{{ event.venue.city }}, {{ event.venue.state }}</div>
+              </td>
+              <td>{{ event.distributor.username }}</td>
+              <td>
+                <div>{{ event.startDateTime | date:'mediumDate' }}</div>
+                <div class="time-range text-secondary">
+                  {{ event.startDateTime | date:'shortTime' }} - {{ event.endDateTime | date:'shortTime' }}
+                </div>
+              </td>
+              <td class="text-right">
+                <div class="action-group">
+                  <button (click)="handleApproval(event._id!, 'approved')" class="btn-action approve">
+                    Approve
+                  </button>
+                  <button (click)="handleApproval(event._id!, 'rejected')" class="btn-action reject">
+                    Reject
+                  </button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="empty-state">No pending event requests at this time.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Approved Events Section -->
+  <div class="card">
+    <div class="card-header border-success">
+      <h3>
+        <span class="indicator approved"></span>
+        Approved Schedule
+      </h3>
+      <span class="badge">{{ approvedEvents.length }}</span>
+    </div>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Performance</th>
+            <th>Venue</th>
+            <th>Schedule</th>
+            <th>Status</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (event of approvedEvents; track event._id) {
+            <tr>
+              <td class="font-medium">{{ event.performance.performanceName }}</td>
+              <td>
+                <div class="venue-name">{{ event.venue.name }}</div>
+                <div class="venue-loc">{{ event.venue.city }}</div>
+              </td>
+              <td>
+                <div>{{ event.startDateTime | date:'mediumDate' }}</div>
+                <div class="countdown" [ngClass]="{'urgent': daysUntil(event.startDateTime).includes('Tomorrow') || daysUntil(event.startDateTime).includes('Today')}">
+                  {{ daysUntil(event.startDateTime) }}
+                </div>
+              </td>
+              <td>
+                <span class="status-badge approved">Confirmed</span>
+              </td>
+              <td class="text-right">
+                <button (click)="onCancel(event._id!)" class="btn btn-sm btn-cancel-event">Cancel Event</button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="empty-state">No approved events scheduled.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

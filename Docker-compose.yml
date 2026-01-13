@@ -1,0 +1,38 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  server:
+    build: ./server
+    ports:
+      - "3001:3000" # Map host port 3001 to container port 3000
+    volumes:
+      - ./server:/usr/src/app # Mount local code for live updates
+      - /usr/src/app/node_modules # Do not map node_modules
+    depends_on:
+      - mongo
+    env_file:
+      - ./server/.env
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27055:27017"
+    volumes:
+      - mongo-data:/data/db
+    # Enable Replica Set mode
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+
+  # One-off service to initialize the Replica Set
+  mongo-init:
+    image: mongo:latest
+    depends_on:
+      - mongo
+    restart: "no"
+    entrypoint: >
+      /bin/bash -c "
+      sleep 5;
+      mongosh --host mongo:27017 --eval 'try { rs.initiate({ _id: \"rs0\", members: [{ _id: 0, host: \"mongo:27017\" }] }) } catch (e) { print(e) }'
+      "
+
+volumes:
+  mongo-data:

@@ -1,0 +1,40 @@
+<div class="venues-page">
+  <!-- Header / Hero Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Explore Venues</h1>
+      <p class="subtitle">Find events at your favorite locations.</p>
+      
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <input 
+          type="text" 
+          placeholder="Search by venue name, city, or state..." 
+          [(ngModel)]="searchTerm" 
+          (input)="filterVenues()">
+        <button class="btn-search">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="venue-list-container">
+    <div class="venue-grid">
+      @for (venue of filteredVenues; track venue._id) {
+        <a [routerLink]="['/venues', venue._id]" class="venue-card">
+          <div class="card-body">
+            <h3>{{ venue.name }}</h3>
+            <p class="location">{{ venue.city }}, {{ venue.state }}</p>
+            <div class="details">
+              <p><strong>Capacity:</strong> {{ venue.capacity | number }}</p>
+              <p class="address">{{ venue.address }}</p>
+            </div>
+          </div>
+        </a>
+      } @empty {
+        <div class="empty-state">
+          <p>No venues found matching "{{ searchTerm }}".</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

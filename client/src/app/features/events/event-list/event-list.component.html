@@ -1,0 +1,87 @@
+<div class="events-page">
+  <!-- Page Header / Hero Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Discover Events</h1>
+      <p class="subtitle">Browse upcoming concerts, performances, and shows happening near you.</p>
+      
+      <!-- Visual Search Bar -->
+      <div class="search-bar">
+        <input 
+          type="text" 
+          placeholder="Search by artist, event, or venue..." 
+          [(ngModel)]="searchTerm" 
+          (input)="filterEvents()">
+        <button class="btn-search">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="events-container">
+    <div class="events-grid">
+      @for (event of filteredEvents; track event._id) {
+        <div class="event-card">
+          <div class="card-header">
+            <div class="artist-name">{{ event.performance.artistProfile.artistName }}</div>
+            <div class="performance-name">{{ event.performance.performanceName }}</div>
+          </div>
+          
+          <div class="card-body">
+            <div class="info-row">
+              <span class="label">Venue</span>
+              <span class="value">{{ event.venue.name }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Location</span>
+              <span class="value">{{ event.venue.city }}, {{ event.venue.state }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Date</span>
+              <span class="value">{{ event.startDateTime | date:'mediumDate' }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Time</span>
+              <span class="value">
+                {{ event.startDateTime | date:'shortTime' }} - {{ event.endDateTime | date:'shortTime' }}
+              </span>
+            </div>
+            
+            <!-- Availability Indicator -->
+            @if (event.ticketsSold >= event.venue.capacity) {
+              <div class="availability-badge sold-out">Sold Out</div>
+            } @else if (event.venue.capacity - event.ticketsSold < 20) {
+              <div class="availability-badge low-stock">
+                Only {{ event.venue.capacity - event.ticketsSold }} tickets left!
+              </div>
+            } @else if (isEventPast(event)) {
+              <div class="availability-badge sold-out">Event Ended</div>
+            } @else {
+              <div class="availability-badge available">Tickets Available</div>
+            }
+          </div>
+
+          <div class="card-footer">
+            <div class="price-display">
+              <span class="price-label">Price</span>
+              <span class="price-value">{{ event.ticketPrice | currency }}</span>
+            </div>
+            
+            @if (event.ticketsSold >= event.venue.capacity) {
+              <button class="btn btn-sold-out" disabled>Sold Out</button>
+            } @else if (isEventPast(event)) {
+              <button class="btn btn-sold-out" disabled>Past Event</button>
+            } @else {
+              <button (click)="buyTickets(event)" class="btn btn-buy-tickets">
+                Get Tickets
+              </button>
+            }
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <p>No events found matching "{{ searchTerm }}".</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

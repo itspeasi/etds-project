@@ -1,0 +1,77 @@
+<div class="admin-layout">
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="header-content">
+      <h1>System Administration</h1>
+      <p>Manage database collections, system state, and data exports.</p>
+    </div>
+  </header>
+
+  <!-- Main Content Grid -->
+  <div class="admin-grid">
+    
+    <!-- Left Column: Collections -->
+    <section class="collections-section">
+      <div class="section-header">
+        <h2>Data Collections</h2>
+        <span class="badge">{{ collectionNames.length }} Collections</span>
+      </div>
+      
+      <div class="collection-list">
+        @for (name of collectionNames; track name) {
+          <a [routerLink]="['/admin/collections', name]" class="collection-item">
+            <span class="icon">📂</span>
+            <span class="name">{{ name }}</span>
+            <span class="arrow">→</span>
+          </a>
+        } @empty {
+          <div class="empty-state">
+            <p>No collections found in the database.</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Right Column: Operations -->
+    <aside class="operations-sidebar">
+      
+      <!-- Export Card -->
+      <div class="card operation-card">
+        <div class="card-icon export-icon">⬇️</div>
+        <h3>Data Export</h3>
+        <p>Download a complete snapshot of all database collections as a ZIP file.</p>
+        <button (click)="exportAllCollections()" class="btn btn-export">
+          Export All Data
+        </button>
+      </div>
+
+      <!-- Danger Zone Card -->
+      <div class="card danger-card">
+        <div class="card-header-danger">
+          <div class="card-icon danger-icon">⚠️</div>
+          <h3>Danger Zone</h3>
+        </div>
+        <p>Irreversible actions. Proceed with caution.</p>
+        
+        <div class="danger-actions">
+          <div class="action-row">
+            <div class="action-info">
+              <strong>Reset to Seed</strong>
+              <span>Restores default sample data.</span>
+            </div>
+            <button (click)="resetDb()" class="btn btn-warning">Reset</button>
+          </div>
+          
+          <div class="action-row">
+            <div class="action-info">
+              <strong>Clear Database</strong>
+              <span>Permanently deletes all data.</span>
+            </div>
+            <button (click)="clearDb()" class="btn btn-danger">Clear</button>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</div>

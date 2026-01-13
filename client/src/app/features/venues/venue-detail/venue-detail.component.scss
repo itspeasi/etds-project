@@ -1,0 +1,95 @@
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: var(--link-color);
+  text-decoration: none;
+  font-weight: 500;
+  
+  &:hover {
+    text-decoration: underline;
+    color: var(--link-hover-color);
+  }
+}
+
+.venue-header {
+  margin-bottom: 3rem;
+  
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+    margin: 0 0 1rem 0;
+    line-height: 1.1;
+  }
+
+  .meta-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    color: var(--secondary-text-color);
+    font-size: 1.1rem;
+    align-items: center;
+
+    .location {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      &::before {
+        content: "📍"; 
+      }
+    }
+
+    .capacity {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-left: 2rem;
+      border-left: 1px solid var(--border-color);
+
+      &::before {
+        content: "👥";
+      }
+    }
+  }
+}
+
+/* Card Styles for Calendar */
+.card {
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: rgba(255, 255, 255, 0.02);
+
+  h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--primary-text-color);
+  }
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* States */
+.loading-state, .error-state {
+  text-align: center;
+  padding: 4rem;
+  color: var(--secondary-text-color);
+  font-size: 1.1rem;
+}

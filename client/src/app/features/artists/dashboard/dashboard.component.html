@@ -1,0 +1,86 @@
+<div class="page-container">
+  <div class="header-section">
+    <h2>Sales Summary</h2>
+    <p class="subtitle">Track your performance and compare against top artists.</p>
+
+    <!-- Year Filter -->
+    <div class="filter-container" *ngIf="availableYears.length > 0">
+      <label for="yearSelect">Select Year:</label>
+      <select id="yearSelect" [(ngModel)]="selectedYear" (change)="updateCharts()">
+        <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
+      </select>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading-state">
+      <p>Loading analytics...</p>
+    </div>
+  } @else {
+    <div class="charts-stack">
+      <!-- Comparison Chart -->
+      <div class="card chart-card">
+        <div class="card-body">
+          @if (comparisonChartData.datasets.length > 0) {
+            <div class="chart-container">
+              <canvas baseChart
+                [data]="comparisonChartData"
+                [options]="comparisonChartOptions"
+                [type]="'line'">
+              </canvas>
+            </div>
+          } @else {
+            <div class="empty-state">
+              <p>No sales data available for comparison in {{ selectedYear }}.</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Venue Breakdown Chart -->
+      <div class="card chart-card">
+        <div class="card-body">
+          @if (venueChartData.datasets.length > 0) {
+            <div class="chart-container">
+              <canvas baseChart
+                [data]="venueChartData"
+                [options]="venueChartOptions"
+                [type]="'line'">
+              </canvas>
+            </div>
+          } @else {
+            <div class="empty-state">
+              <p>No venue sales data available for {{ selectedYear }}.</p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+<!-- Styles for the filter dropdown -->
+<style>
+  .filter-container {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .filter-container label {
+    color: var(--secondary-text-color);
+    font-weight: 500;
+  }
+
+  .filter-container select {
+    background-color: var(--surface-color);
+    color: var(--primary-text-color);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+</style>

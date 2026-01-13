@@ -1,0 +1,97 @@
+<div class="calendar-wrapper">
+  <!-- Calendar Header -->
+  <div class="calendar-header">
+    <button (click)="changeMonth(-1)" class="nav-btn">&lt;</button>
+    <h3>{{ currentDate | date:'MMMM yyyy' }}</h3>
+    <button (click)="changeMonth(1)" class="nav-btn">&gt;</button>
+  </div>
+
+  <!-- Calendar Grid -->
+  <div class="calendar-grid">
+    <!-- Weekday Headers -->
+    @for (day of weekDays; track day) {
+      <div class="weekday-header">{{ day }}</div>
+    }
+
+    <!-- Days -->
+    @for (day of calendarDays; track $index) {
+      <div 
+        class="calendar-day" 
+        [class.other-month]="!day.isCurrentMonth"
+        [class.today]="day.isToday"
+        [class.selected]="day.isSelected"
+        [class.has-events]="day.events.length > 0"
+        (click)="selectDay(day)">
+        
+        <span class="day-number">{{ day.date | date:'d' }}</span>
+        
+        <!-- Event Dots -->
+        <div class="event-dots">
+          @for (event of day.events; track event._id) {
+            <div class="dot" [class.past]="isPast(event)" [title]="event.performance.performanceName"></div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Selected Day Details -->
+  @if (selectedDay && selectedDay.events.length > 0) {
+    <div class="day-details">
+      <h4>Events on {{ selectedDay.date | date:'fullDate' }}</h4>
+      
+      <div class="events-list">
+        @for (event of selectedDay.events; track event._id) {
+          <div class="event-item" [class.past-item]="isPast(event)">
+            <div class="event-info">
+              <span class="time">{{ event.startDateTime | date:'shortTime' }}</span>
+              <div class="main-info">
+                <!-- Added Artist Name Display -->
+                <div class="artist-name" style="font-size: 0.9em; color: var(--accent-color); font-weight: 600;">
+                  {{ event.performance.artistProfile.artistName }}
+                </div>
+                <strong>{{ event.performance.performanceName }}</strong>
+                <span class="venue">
+                  {{ event.venue.name }}
+                  @if (event.venue.city) {
+                    , {{ event.venue.city }}
+                  }
+                  @if (event.venue.state) {
+                    , {{ event.venue.state }}
+                  }
+                </span>
+              </div>
+            </div>
+
+            <div class="event-action">
+              <!-- Only show "Past Event" label if it is past -->
+              @if (isPast(event)) {
+                <span class="status-label past">Past Event</span>
+              } @else {
+                <!-- Artist Mode: Show Status -->
+                @if (mode === 'artist') {
+                  <span class="status-label" [ngClass]="event.status">{{ event.status }}</span>
+                } 
+                <!-- Public Mode: Buy Buttons -->
+                @else {
+                  @if (isSoldOut(event)) {
+                    <button disabled class="btn btn-sold-out">Sold Out</button>
+                  } @else {
+                    <div class="price-tag">{{ event.ticketPrice | currency }}</div>
+                    <button (click)="buyTicket(event)" class="btn btn-buy">
+                      Buy Ticket
+                    </button>
+                  }
+                }
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  } @else if (selectedDay) {
+    <div class="day-details empty">
+      <p>No events scheduled for {{ selectedDay.date | date:'mediumDate' }}.</p>
+    </div>
+  }
+</div>

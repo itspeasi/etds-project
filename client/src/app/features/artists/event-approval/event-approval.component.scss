@@ -1,0 +1,236 @@
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header-section {
+  margin-bottom: 2.5rem;
+  text-align: center;
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary-text-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    color: var(--secondary-text-color);
+    font-size: 1rem;
+  }
+}
+
+.mb-4 {
+  margin-bottom: 2.5rem;
+}
+
+.card {
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 1.25rem 1.5rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-text-color);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* Colored top borders for visual distinction */
+  &.border-warning {
+    border-top: 3px solid var(--warning-color);
+  }
+  &.border-success {
+    border-top: 3px solid var(--success-color);
+  }
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+
+  &.pending { background-color: var(--warning-color); box-shadow: 0 0 8px var(--warning-color); }
+  &.approved { background-color: var(--success-color); box-shadow: 0 0 8px var(--success-color); }
+}
+
+.badge {
+  background-color: var(--background-color);
+  color: var(--secondary-text-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+
+  th, td {
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  th {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: var(--secondary-text-color);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  td {
+    color: var(--primary-text-color);
+    font-size: 0.95rem;
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+}
+
+.font-medium {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.venue-name {
+  font-weight: 500;
+}
+
+.venue-loc, .time-range {
+  font-size: 0.85rem;
+  color: var(--secondary-text-color);
+  margin-top: 0.25rem;
+}
+
+.countdown {
+  font-size: 0.85rem;
+  color: var(--accent-color);
+  margin-top: 0.25rem;
+  font-weight: 500;
+
+  &.urgent {
+    color: var(--warning-color);
+  }
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+
+  &.approved {
+    background-color: rgba(22, 163, 74, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.2);
+  }
+}
+
+/* Actions */
+.text-right {
+  text-align: right;
+}
+
+.action-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.btn-action {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+
+  &.approve {
+    background-color: rgba(22, 163, 74, 0.1);
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.2);
+
+    &:hover {
+      background-color: var(--success-color);
+      color: white;
+    }
+  }
+
+  &.reject {
+    background-color: rgba(220, 38, 38, 0.1);
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.2);
+
+    &:hover {
+      background-color: var(--danger-color);
+      color: white;
+    }
+  }
+}
+
+/* Standard Button Styles */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  color: white;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.btn-cancel-event {
+  background-color: #d97706; // Darker orange
+  &:hover { background-color: #b45309; }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: var(--secondary-text-color);
+  font-style: italic;
+}

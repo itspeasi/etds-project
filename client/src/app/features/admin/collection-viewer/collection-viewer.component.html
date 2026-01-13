@@ -1,0 +1,68 @@
+<div class="viewer-container">
+  <div class="viewer-header">
+    <div>
+      <a routerLink="/admin" class="back-link">&larr; Back to Dashboard</a>
+      <h1 class="collection-title">Collection: <span>{{ collectionName }}</span></h1>
+      <p class="meta-text" *ngIf="totalItems > 0">Total Documents: {{ totalItems | number }}</p>
+    </div>
+    <div class="header-actions">
+      <button (click)="exportAsJson()" class="btn" [disabled]="collectionData.length === 0">Export Page JSON</button>
+      <button (click)="deleteCollection()" class="btn btn-delete">Delete Collection</button>
+    </div>
+  </div>
+
+
+  @if (loading) {
+    <div class="loading-state">Loading data...</div>
+  } @else if (collectionData.length > 0) {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            @for (header of headers; track header) {
+              <th>{{ header }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of collectionData; track item._id) {
+            <tr>
+              @for (header of headers; track header) {
+                <td>
+                  @if (isObject(item[header])) {
+                    <pre>{{ item[header] | json }}</pre>
+                  } @else {
+                    <div class="text-cell">{{ item[header] }}</div>
+                  }
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-controls">
+      <button (click)="prevPage()" [disabled]="currentPage === 1" class="btn btn-secondary">Previous</button>
+      
+      <div class="page-input-group">
+        <span>Page</span>
+        <input 
+          type="number" 
+          [ngModel]="currentPage" 
+          (change)="goToPage($any($event.target).value)" 
+          min="1" 
+          [max]="totalPages"
+          class="page-input"
+        >
+        <span>of {{ totalPages }}</span>
+      </div>
+
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="btn btn-secondary">Next</button>
+    </div>
+
+  } @else {
+    <p class="empty-state">This collection is empty.</p>
+  }
+</div>
