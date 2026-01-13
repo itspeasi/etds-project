@@ -2,9 +2,9 @@
 
 A full-stack, containerized ticketing platform simulation designed to mirror some of the core complexities of enterprise platforms like **Ticketmaster/StubHub**. This project focuses on high-concurrency inventory management, role-based access control (RBAC), and real-time sales analytics.
 
-![Distributor Sales Dashboard Preview](assets/distributorsdashboard.png)
-![Artists Sales Dashboard Preview](assets/artistsdashboard.png)
-![Top 5 in Gross Sales Ranking Preview](assets/top5artists.png)
+![Distributor Sales Dashboard Preview](/assets/DistributorsDashboard.png)
+![Artists Sales Dashboard Preview](/assets/ArtistsDashboard.png)
+![Top 5 in Gross Sales Ranking Preview](/assets/Top5Artists.png)
 
 ## Key Features
 
